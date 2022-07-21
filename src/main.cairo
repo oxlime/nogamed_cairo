@@ -1,5 +1,4 @@
 %lang starknet
-from starkware.cairo.common.math import assert_nn
 from starkware.cairo.common.cairo_builtins import HashBuiltin
 from starkware.cairo.common.uint256 import (
     Uint256, uint256_add, split_64)
@@ -69,19 +68,24 @@ func get_owner_at_token{syscall_ptr : felt*, range_check_ptr}(
     return (res)
 end
 
-local stop = 10
-local coef = 10
-let (local myList: felt*) = alloc()
+# this works in cairo playground 
+func main{output_ptr}():
+    alloc_locals
+    local stop = 10
+    local coef = 10
+    let (local myList: felt*) = alloc()
+    let start = 0
+    body{coef=coef, myList=myList, stop=stop}(start)
+    return()
+end
 
-func body{coef, myList, stop}(i):
-    if i >= stop:
-        return
+func body{coef, myList : felt*, stop}(i):
+    if i == stop:
+        return ()
     end
 
     let x = i * coef + 1
+#    %{ print(ids.i) %}
     assert myList[i] = x
     return body(i + 1)
 end
-
-let start = 0
-body{coef=coef, myList=myList, stop=stop}(start)
