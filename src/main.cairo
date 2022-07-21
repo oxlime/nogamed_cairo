@@ -51,9 +51,8 @@ func get_all_owners{syscall_ptr : felt*, range_check_ptr}(
     let (own) = IERC721.ownerOf(
         contract_address=contract_address, tokenId=size
     )
-    [arr] = own
+    assert [arr] = own
     let one : Uint256 = Uint256(1, 0) 
-    #let (newSize, _ : Uint256) = uint256_add(size, one)
     let newSize : Uint256 = uint256_add(size, one)
     get_all_owners(contract_address=contract_address,arr_len=arr_len+1, arr=arr + 1, size=newSize)
     return (arr_len, arr)
@@ -69,3 +68,20 @@ func get_owner_at_token{syscall_ptr : felt*, range_check_ptr}(
             )
     return (res)
 end
+
+local stop = 10
+local coef = 10
+let (local myList: felt*) = alloc()
+
+func body{coef, myList, stop}(i):
+    if i >= stop:
+        return
+    end
+
+    let x = i * coef + 1
+    assert myList[i] = x
+    return body(i + 1)
+end
+
+let start = 0
+body{coef=coef, myList=myList, stop=stop}(start)
