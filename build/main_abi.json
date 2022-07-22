@@ -53,39 +53,6 @@
                 "type": "felt"
             },
             {
-                "name": "arr_len",
-                "type": "felt"
-            },
-            {
-                "name": "arr",
-                "type": "felt*"
-            },
-            {
-                "name": "size",
-                "type": "Uint256"
-            }
-        ],
-        "name": "get_all_owners",
-        "outputs": [
-            {
-                "name": "res_len",
-                "type": "felt"
-            },
-            {
-                "name": "res",
-                "type": "felt*"
-            }
-        ],
-        "stateMutability": "view",
-        "type": "function"
-    },
-    {
-        "inputs": [
-            {
-                "name": "contract_address",
-                "type": "felt"
-            },
-            {
                 "name": "id",
                 "type": "Uint256"
             }
@@ -128,15 +95,23 @@
     {
         "inputs": [
             {
-                "name": "num",
+                "name": "contract_address",
+                "type": "felt"
+            },
+            {
+                "name": "id",
                 "type": "Uint256"
             }
         ],
-        "name": "test_add",
+        "name": "get_points_array",
         "outputs": [
             {
-                "name": "res",
-                "type": "Uint256"
+                "name": "pointList_len",
+                "type": "felt"
+            },
+            {
+                "name": "pointList",
+                "type": "felt*"
             }
         ],
         "stateMutability": "view",
