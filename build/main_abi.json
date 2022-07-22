@@ -73,6 +73,31 @@
     {
         "inputs": [
             {
+                "name": "contract_address",
+                "type": "felt"
+            },
+            {
+                "name": "id",
+                "type": "Uint256"
+            }
+        ],
+        "name": "get_owners_array",
+        "outputs": [
+            {
+                "name": "myList_len",
+                "type": "felt"
+            },
+            {
+                "name": "myList",
+                "type": "felt*"
+            }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [
+            {
                 "name": "num",
                 "type": "Uint256"
             }

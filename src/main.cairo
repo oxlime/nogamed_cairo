@@ -90,6 +90,14 @@ func body{coef, myList : felt*, stop}(i):
     return body(i + 1)
 end
 
+@view
+func get_owners_array{syscall_ptr : felt*, range_check_ptr}(contract_address : felt, id : Uint256) -> (myList_len : felt, myList : felt*):
+    alloc_locals
+    let (local myList: felt*) = alloc()
+    get_owner{myList=myList}(0, contract_address, id)
+    return (200, myList)
+end
+
 func get_owner{syscall_ptr : felt*, range_check_ptr, myList : felt*}(i, contract_address : felt, id : Uint256):
     if i == 200:
         return()
@@ -98,7 +106,11 @@ func get_owner{syscall_ptr : felt*, range_check_ptr, myList : felt*}(i, contract
     let (owner) = IERC721.ownerOf(
         contract_address=contract_address, tokenId=id
     )
-    return get_owner(i + 1, contract_address, id)
+    assert myList[i] = owner
+    let one : Uint256 = Uint256(1, 0) 
+    let (newId : Uint256, is_overflow) = uint256_add(id, one)
+    #assert (is_overflow) = 0
+    return get_owner(i + 1, contract_address, id=newId)
 end
 
 @view
