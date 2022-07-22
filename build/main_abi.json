@@ -17,6 +17,36 @@
         "type": "struct"
     },
     {
+        "data": [
+            {
+                "name": "planet_id",
+                "type": "Uint256"
+            }
+        ],
+        "keys": [],
+        "name": "planet_genereted",
+        "type": "event"
+    },
+    {
+        "data": [
+            {
+                "name": "metal_used",
+                "type": "felt"
+            },
+            {
+                "name": "crystal_used",
+                "type": "felt"
+            },
+            {
+                "name": "deuterium_used",
+                "type": "felt"
+            }
+        ],
+        "keys": [],
+        "name": "structure_updated",
+        "type": "event"
+    },
+    {
         "inputs": [
             {
                 "name": "contract_address",
