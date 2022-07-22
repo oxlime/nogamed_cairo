@@ -69,5 +69,22 @@
         ],
         "stateMutability": "view",
         "type": "function"
+    },
+    {
+        "inputs": [
+            {
+                "name": "num",
+                "type": "Uint256"
+            }
+        ],
+        "name": "test_add",
+        "outputs": [
+            {
+                "name": "res",
+                "type": "Uint256"
+            }
+        ],
+        "stateMutability": "view",
+        "type": "function"
     }
 ]

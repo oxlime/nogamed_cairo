@@ -52,7 +52,7 @@ func get_all_owners{syscall_ptr : felt*, range_check_ptr}(
     )
     assert [arr] = own
     let one : Uint256 = Uint256(1, 0) 
-    let newSize : Uint256 = uint256_add(size, one)
+    let (newSize : Uint256, is_overflow) = uint256_add(size, one)
     get_all_owners(contract_address=contract_address,arr_len=arr_len+1, arr=arr + 1, size=newSize)
     return (arr_len, arr)
 end
@@ -88,4 +88,23 @@ func body{coef, myList : felt*, stop}(i):
 #    %{ print(ids.i) %}
     assert myList[i] = x
     return body(i + 1)
+end
+
+func get_owner{syscall_ptr : felt*, range_check_ptr, myList : felt*}(i, contract_address : felt, id : Uint256):
+    if i == 200:
+        return()
+    end
+
+    let (owner) = IERC721.ownerOf(
+        contract_address=contract_address, tokenId=id
+    )
+    return get_owner(i + 1, contract_address, id)
+end
+
+@view
+func test_add{syscall_ptr : felt*, range_check_ptr}(num : Uint256) -> (res : Uint256): 
+    let one : Uint256 = Uint256(1, 0) 
+    let (res : Uint256, is_overflow) = uint256_add(num, one)
+    assert (is_overflow) = 0
+    return (res) 
 end
