@@ -133,10 +133,11 @@ func get_owner_at_token{syscall_ptr : felt*, range_check_ptr}(
 end
 
 @view
-func get_owners_array{syscall_ptr : felt*, range_check_ptr}(contract_address : felt, id : Uint256) -> (myList_len : felt, myList : felt*):
+func get_owners_array{syscall_ptr : felt*, range_check_ptr}(contract_address : felt) -> (myList_len : felt, myList : felt*):
     alloc_locals
     let (local myList: felt*) = alloc()
-    get_owner{myList=myList}(0, contract_address, id)
+    let one : Uint256 = Uint256(1, 0) 
+    get_owner{myList=myList}(0, contract_address, one)
     return (200, myList)
 end
 
@@ -156,10 +157,11 @@ func get_owner{syscall_ptr : felt*, range_check_ptr, myList : felt*}(i, contract
 end
 
 @view
-func get_points_array{syscall_ptr : felt*, range_check_ptr}(contract_address : felt, id : Uint256) -> (pointList_len : felt, pointList : felt*):
+func get_points_array{syscall_ptr : felt*, range_check_ptr}(contract_address : felt) -> (pointList_len : felt, pointList : felt*):
     alloc_locals
     let (local pointList: felt*) = alloc()
-    get_points{pointList=pointList}(0, contract_address, id)
+    let one : Uint256 = Uint256(1, 0) 
+    get_points{pointList=pointList}(0, contract_address, one)
     return (200, pointList)
 end
 
