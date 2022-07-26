@@ -6,7 +6,7 @@ libs_path = "lib"
 
 ["protostar.contracts"]
 main = [
-    "src/main.cairo",
+    "src/leaderboard.cairo",
 ]
 
 [profile.devnet.protostar.deploy]
