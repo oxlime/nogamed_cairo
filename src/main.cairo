@@ -1,125 +1,11 @@
 %lang starknet
 from starkware.cairo.common.cairo_builtins import HashBuiltin
 from starkware.cairo.common.uint256 import (
-    Uint256, uint256_add, split_64)
+    Uint256, uint256_add)
 from starkware.cairo.common.alloc import alloc
 
-from lib.library import Planet, Cost
-
-@contract_interface
-namespace IERC721:
-    func balanceOf(owner : felt) -> (balance : Uint256):
-    end
-
-    func ownerOf(tokenId : Uint256) -> (owner : felt):
-    end
-
-    func safeTransferFrom(
-        from_ : felt, to : felt, tokenId : Uint256, data_len : felt, data : felt*
-    ):
-    end
-
-    func transferFrom(from_ : felt, to : felt, tokenId : Uint256):
-    end
-
-    func approve(approved : felt, tokenId : Uint256):
-    end
-
-    func setApprovalForAll(operator : felt, approved : felt):
-    end
-
-    func getApproved(tokenId : Uint256) -> (approved : felt):
-    end
-
-    func isApprovedForAll(owner : felt, operator : felt) -> (isApproved : felt):
-    end
-
-    func mint(to : felt, token_id : Uint256):
-    end
-
-    func ownerToPlanet(owner : felt) -> (tokenId : Uint256):
-    end
-end
-
-@contract_interface
-namespace IOgame:
-    func number_of_planets() -> (n_planets : felt):
-    end
-
-    func owner_of(address : felt) -> (planet_id : Uint256):
-    end
-
-    func erc721_address() -> (res : felt):
-    end
-
-    func get_structures_levels(your_address : felt) -> (
-        metal_mine : felt,
-        crystal_mine : felt,
-        deuterium_mine : felt,
-        solar_plant : felt,
-        robot_factory : felt,
-    ):
-    end
-
-    func resources_available(your_address : felt) -> (
-        metal : felt, crystal : felt, deuterium : felt, energy : felt
-    ):
-    end
-
-    func get_structures_upgrade_cost(your_address : felt) -> (
-        metal_mine : Cost,
-        crystal_mine : Cost,
-        deuterium_mine : Cost,
-        solar_plant : Cost,
-        robot_factory : Cost,
-    ):
-    end
-
-    func build_time_completion(your_address : felt) -> (timestamp : felt):
-    end
-
-    func player_points(your_address : felt) -> (points : felt):
-    end
-
-    func erc20_addresses(metal_token : felt, crystal_token : felt, deuterium_token : felt) -> ():
-    end
-
-    func generate_planet() -> ():
-    end
-
-    func collect_resources() -> ():
-    end
-
-    func metal_upgrade_start() -> (end_time : felt):
-    end
-
-    func metal_upgrade_complete() -> ():
-    end
-
-    func crystal_upgrade_start() -> (end_time : felt):
-    end
-
-    func crystal_upgrade_complete() -> ():
-    end
-
-    func deuterium_upgrade_start() -> (end_time : felt):
-    end
-
-    func deuterium_upgrade_complete() -> ():
-    end
-
-    func solar_plant_upgrade_start() -> (end_time : felt):
-    end
-
-    func solar_plant_upgrade_complete() -> ():
-    end
-
-    func robot_factory_upgrade_start() -> (end_time : felt):
-    end
-
-    func robot_factory_upgrade_complete() -> ():
-    end
-end
+from lib.IERC721 import IERC721
+from lib.IOgame import IOgame
 
 @view
 func get_owner_at_token{syscall_ptr : felt*, range_check_ptr}(
@@ -173,7 +59,6 @@ func get_points{syscall_ptr : felt*, range_check_ptr, pointList : felt*}(i, cont
     let (owner) = IERC721.ownerOf(
         contract_address=contract_address, tokenId=id
     )
-    #assert myList[i] = owner
     let (points) = IOgame.player_points(
     contract_address=1505365600088388820431824311940060394708617414836564324735086295425001052239, your_address=owner
     )
